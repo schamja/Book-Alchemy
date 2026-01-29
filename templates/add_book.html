@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <link rel="stylesheet" href="/static/styles.css">
+  </head>
+  <body>
+ <div class="container">
+        <nav>
+            <a href="/">🏠 Home</a>
+            <a href="/add_author">✍️ Autor hinzufügen</a>
+            <a href="/add_book">📖 Buch hinzufügen</a>
+        </nav>
+
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            {% for message in messages %}
+              <div class="flash">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        </div>
+    <form action="/add_book" method="POST">
+  <label>ISBN:</label>
+  <input type="text" name="isbn" required><br>
+
+  <label>Title:</label>
+  <input type="text" name="title" required><br>
+
+  <label>Publication Year:</label>
+  <input type="number" name="publication_year"><br>
+  <label for="rating">Bewertung (1-10):</label>
+  <input type="number" name="rating" id="rating" min="1" max="10" value="5">
+  <label for="author_id">Author:</label>
+      <select name="author_id" id="author_id" required>
+    {% for author in authors %}
+        <option value="{{ author.id }}">{{ author.name }}</option>
+    {% endfor %}
+</select>
+
+  <input type="submit" value="Add Book">
+</form>
+
+  </body>
+</html>

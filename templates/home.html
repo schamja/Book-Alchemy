@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+      <title>Book Alchemy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <link rel="stylesheet" href="/static/styles.css">
+  </head>
+
+<body>
+    <div class="container">
+        <nav>
+            <a href="/">🏠 Home</a>
+            <a href="/add_author">✍️ Autor hinzufügen</a>
+            <a href="/add_book">📖 Buch hinzufügen</a>
+        </nav>
+
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            {% for message in messages %}
+              <div class="flash">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        </div>
+<div class="controls">
+    <form action="/" method="GET" style="display: inline;">
+        <input type="text" name="search" placeholder="Titel suchen..." value="{{ search_query }}">
+        <button type="submit">Suche 📚</button>
+    </form>
+
+    <span style="margin-left: 20px;">Sortieren nach:</span>
+    <a href="{{ url_for('home', sort='title', search=search_query) }}">Titel</a> |
+    <a href="{{ url_for('home', sort='author', search=search_query) }}">Autor</a>
+</div>
+
+<hr>
+
+<div class="book-grid">
+    {% for book in books %}
+    <div class="book-card">
+        <h3>{{ book.title }}</h3>
+        <p>von {{ book.author.name }} ({{ book.publication_year }})</p>
+
+        <form action="{{ url_for('delete_book', book_id=book.id) }}" method="POST"
+              onsubmit="return confirm('Möchtest du dieses Buch wirklich löschen?');">
+            <button type="submit" style="background-color: #ff4d4d; color: white;">Löschen ♻</button>
+        </form>
+    </div>
+    {% else %}
+    <p>Keine Bücher gefunden, die deiner Suche entsprechen.</p>
+    {% endfor %}
+</div>
+</body>
+</html>

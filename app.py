@@ -1,6 +1,6 @@
 import os
 import requests
-from flask import Flask, render_template, request, flash, redirect, url_for, flash
+from flask import Flask, render_template, request, flash, redirect, url_for
 from data_models import db, Author, Book
 
 app = Flask(__name__)
@@ -18,7 +18,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = 'super_geheim'  # Wichtig für flash()!
 
 db.init_app(app)
-
 
 @app.route('/add_book', methods=['GET', 'POST'])
 def add_book():
@@ -46,7 +45,6 @@ def add_book():
     authors = Author.query.all()
     return render_template('add_book.html', authors=authors)
 
-
 @app.route('/recommendations')
 def recommendations():
     books = Book.query.all()
@@ -60,6 +58,7 @@ def recommendations():
     ai_suggestion = "Basierend auf deinem Geschmack empfiehlt die Alchemie-KI: 'Der Name des Windes' von Patrick Rothfuss."
 
     return render_template('recommendations.html', suggestion=ai_suggestion, prompt=prompt)
+
 @app.route('/')
 def home():
     search_query = request.args.get('search', '')
@@ -76,7 +75,10 @@ def home():
     else:
         query = query.order_by(Book.title)
 
+    if search_query:
+        query = query.filter(Book.title.contains(search_query) | Author.name.contains(search_query))
     books = query.all()
+
     return render_template('home.html', books=books, search_query=search_query)
 
 
@@ -127,7 +129,6 @@ def add_author():
             flash("Der Name des Autors ist erforderlich!", "warning")
 
     return render_template('add_author.html')
-
 
 
 

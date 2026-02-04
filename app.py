@@ -1,21 +1,24 @@
 import os
-import requests
 from flask import Flask, render_template, request, flash, redirect, url_for
 from data_models import db, Author, Book
+from dotenv import load_dotenv  # Neu: Zum Laden der .env Datei
+
+# Laden der Umgebungsvariablen
+load_dotenv()
 
 app = Flask(__name__)
 
-# Absoluter Pfad & Ordner-Sicherung
+# Sicherheit: Secret Key aus Umgebungsvariable laden
+app.secret_key = os.getenv('FLASK_SECRET_KEY', 'fallback-key-fuer-lokale-entwicklung')
+
+# Datenbank-Konfiguration
 basedir = os.path.abspath(os.path.dirname(__file__))
 data_path = os.path.join(basedir, 'data')
-
 if not os.path.exists(data_path):
     os.makedirs(data_path)
 
-# URI-Konfiguration
 app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{os.path.join(data_path, 'library.sqlite')}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.secret_key = 'super_geheim'  # Wichtig für flash()!
 
 db.init_app(app)
 

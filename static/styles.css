@@ -1,9 +1,9 @@
 :root {
     --primary-color: #6366f1;
-    --bg-color: #0f172a;
-    --card-bg: #1e293b;
-    --text-light: #f8fafc;
-    --text-dim: #94a3b8;
+    --bg-color: #f8f8f8;
+    --card-bg: rgb(142, 177, 217);
+    --text-light: #071c34;
+    --text-dim: #ffffff;
     --danger: #ef4444;
     --success: #22c55e;
 }
@@ -39,7 +39,9 @@ nav a {
 nav a:hover {
     color: var(--primary-color);
 }
-
+h3{
+    color:#f0f0f0;
+}
 /* Suchleiste */
 .search-container {
     margin-bottom: 30px;
@@ -54,6 +56,11 @@ input[type="text"], input[type="date"], input[type="number"], select {
     width: 250px;
 }
 
+.inputkast{
+    padding: 10px 20px;
+    margin:20px 30px;
+    border: 1px solid var(--card-bg);
+}
 button, .btn-submit {
     padding: 10px 20px;
     border-radius: 8px;

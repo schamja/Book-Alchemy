@@ -24,24 +24,27 @@
 
         </div>
     <form action="/add_book" method="POST">
-  <label>ISBN:</label>
-  <input type="text" name="isbn" required><br>
+        <div class ="inputkast">
+          <label>ISBN:</label>
+          <input type="text" name="isbn" required><br>
 
-  <label>Title:</label>
-  <input type="text" name="title" required><br>
+          <label>Title:</label>
+          <input type="text" name="title" required><br>
 
-  <label>Publication Year:</label>
-  <input type="number" name="publication_year"><br>
-  <label for="rating">Bewertung (1-10):</label>
-  <input type="number" name="rating" id="rating" min="1" max="10" value="5">
-  <label for="author_id">Author:</label>
-      <select name="author_id" id="author_id" required>
-    {% for author in authors %}
-        <option value="{{ author.id }}">{{ author.name }}</option>
-    {% endfor %}
-</select>
+          <label>Publication Year:</label>
+          <input type="number" name="publication_year"><br>
+          <label for="rating">Bewertung (1-10):</label>
+          <input type="number" name="rating" id="rating" min="1" max="10" value="5">
+          <label for="author_id">Author:</label>
+              <select name="author_id" id="author_id" required>
+                    {% for author in authors %}
+                        <option value="{{ author.id }}">{{ author.name }}</option>
+                    {% endfor %}
+
+            </select>
 
   <input type="submit" value="Add Book">
+            </div>
 </form>
 
   </body>
